@@ -1,0 +1,166 @@
+.sidebar.open-sidebar {
+  margin-left: 0 !important;
+}
+
+.sidebar.close-sidebar {
+  margin-left: -200px !important;
+}
+
+.main.open-sidebar {
+  margin-left: 200px !important;
+}
+
+.main.close-sidebar {
+  margin-left: 0px !important;
+}
+
+@media (max-width: 768px) {
+  .main.open-sidebar {
+    margin-left: 0px !important;
+  }
+}
+.bgLogin {
+  background: url(../images/7.jpg);
+  background-size: cover;
+  /* height: calc(100vh - 77px);
+  min-height: calc(100vh - 77px) !important;
+  margin-top: 77px; */
+}
+
+.bgRegister {
+  background: url(../images/1.jpg);
+  background-size: cover;
+  /* height: calc(100vh - 77px);
+  min-height: calc(100vh - 77px) !important; 
+  margin-top: 77px; */
+}
+
+.login-card,
+.signup-card {
+  border: 0;
+}
+.login-card {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.signup-card {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.colorwhite {
+  color: #fff;
+}
+.colorblack {
+  color: #000;
+}
+.coloryellow {
+  color: rgba(255, 184, 0, 1);
+}
+.btn-primary.disabled,
+.btn-primary:disabled {
+  background-color: rgb(47, 45, 45);
+  color: #fff;
+  border-color: rgb(47, 45, 45);
+  opacity: 0.65;
+}
+.btn-primary.customcss {
+  background-color: rgb(47, 45, 45);
+  color: #fff;
+  border-color: rgb(47, 45, 45);
+}
+
+.btn-primary.customcss:hover {
+  background-color: rgba(255, 184, 0, 0.9);
+  border-color: rgba(255, 184, 0, 0.9);
+}
+
+.btn-link.customcss {
+  color: #fff;
+}
+.btn-link.customcss:hover {
+  color: rgba(255, 184, 0, 0.9);
+}
+
+.btn-primary.btn-register-community:hover {
+  background: rgba(255, 184, 0, 0.9);
+  border-color: rgba(255, 184, 0, 0.9);
+  color: #fff;
+}
+
+.registerlist {
+  list-style: none;
+}
+
+.registerlist li:before {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\F111";
+  font-size: 8px;
+  color: rgba(255, 184, 0, 1);
+  display: inline-flex;
+  align-items: center;
+  padding-right: 10px;
+}
+
+.swal-text {
+  text-align: center;
+}
+
+.height-auto {
+  height: auto;
+}
+
+.homescreen {
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-image: url("../images/7.jpg");
+}
+
+/* .home-card-serv{
+  height: 130px;
+} */
+
+#dashboard-analysis .analysis-table th {
+  min-width: 150px;
+}
+
+#dashboard-analysis .analysis-table .analysis-cell-width {
+  min-width: 250px;
+}
+
+.ck-content {
+  color: #5c6873;
+}
+
+/* ul.nav.nav-tabs li a.active {
+  background-color: #2f2c2c;
+  border-radius: 5px !important;
+  color: #03a9fb !important;
+}
+
+ul.nav.nav-tabs li a {
+  border-radius: 5px !important;
+  margin-right: 8px;
+  margin-bottom: 10px;
+} */
+
+.navTitle{
+  color:#fff !important;
+  
+}
+
+.force-white-bg{
+  background-color:#fff !important;
+  color: #5C6875 !important;
+  border: #e4e7ea 1px solid !important
+}
+
+.multiselect-dropdown{
+  font-size: 15px !important;
+}

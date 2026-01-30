@@ -1,0 +1,3 @@
+export const SET_USER_DETAIL = "SET_USER_DETAIL";
+export const TOGGEL_SIDEBAR = "TOGGEL_SIDEBAR";
+export const ASSIGN_VALUE = "ASSIGN_VALUE";

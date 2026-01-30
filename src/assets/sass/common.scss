@@ -1,0 +1,77 @@
+.cursor_pointer {
+    cursor: pointer;
+}
+
+.floating_button {
+    border-radius: 50%;
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+}
+
+.table_react_bootstrap {
+    .react-bs-table-csv-btn {
+        border: 1px solid #e4e7ea;
+    }
+
+    .search-label {
+        float: right;
+    }
+
+    .react-bootstrap-table-pagination {
+        .react-bs-table-sizePerPage-dropdown {
+            .dropdown-menu {
+                li {
+                    a {
+                        display: block;
+                    }
+                }
+            }
+        }
+
+        .react-bootstrap-table-pagination-list {
+            text-align: right;
+
+            ul {
+                margin: 0;
+            }
+        }
+    }
+    &.responsive_table{
+        .react-bootstrap-table{
+            overflow-x: auto;
+            .table{
+                table-layout: auto;
+            }
+        }
+    }
+}
+
+.css-bg1rzq-control {
+    border-radius: 0 !important;
+}
+
+.no_border_radius{
+    border-radius: 0 !important;
+}
+
+.app-header .navbar-brand{
+    min-width: 155px;
+    width: auto;
+    padding-left: 1rem;
+}
+
+.indicators-overview{
+    ul.nav.nav-tabs li a.active {
+        background-color: #2f2c2c;
+        border-radius: 5px !important;
+        color: #03a9fb !important;
+    }
+      
+    ul.nav.nav-tabs li a {
+        border-radius: 5px !important;
+        margin-right: 8px;
+        margin-bottom: 10px;
+    }
+}
+
