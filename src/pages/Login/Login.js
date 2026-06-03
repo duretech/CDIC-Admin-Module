@@ -35,6 +35,8 @@ const Login = ({ onSuccess }) => {
   };
 
   useEffect(() => {
+    localStorage.removeItem('persist:root');
+    sessionStorage.removeItem("Admin_Authorization");
     const searchParams = new URLSearchParams(window.location.search);
     const queryParam = searchParams.get("activateaccount"); // Get the entire query string
     console.log(queryParam,"queryParam")
@@ -91,7 +93,7 @@ const Login = ({ onSuccess }) => {
                   res.data["orguid"] = res.data.organisationUnits[0].id;
                   res.data["orgname"] = orgres.data.name;
                   sessionStorage.setItem("userData", JSON.stringify(res.data));
-                  sessionStorage.setItem("Authorization", Authorization);
+                  sessionStorage.setItem("Admin_Authorization", Authorization);
                   dispatch(setUserDetail(res.data));
                   setLoading(false);
                   onSuccess();
@@ -122,7 +124,7 @@ const Login = ({ onSuccess }) => {
 
   const handleLogout = () => {
     //console.log(":inside logout");
-    sessionStorage.removeItem("Authorization");
+    sessionStorage.removeItem("Admin_Authorization");
     //window.location.reload();
     // this.props.history.push("/Home");
   };
@@ -154,7 +156,7 @@ const Login = ({ onSuccess }) => {
     let emailValid,
       passwordValid,
       fieldValidationErrors = {};
-    console.log(fieldName, value);
+    //console.log(fieldName, value);
     switch (fieldName) {
       case "email":
         emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);

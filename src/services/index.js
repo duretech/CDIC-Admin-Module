@@ -1,6 +1,6 @@
 import axios from "axios";
 import { showAlert } from "../components/core/errorhandling";
-import { apiUrl } from "./urls";
+import { apiUrl, baseUrl } from "./urls";
 import { connect } from "react-redux";
 // import AesUtil from "./AESUtil";
 // const aesUtil = new AesUtil(256, 1000);
@@ -26,7 +26,7 @@ const instance = axios.create({
 instance.interceptors.request.use(
   (config) => {
     config.headers = {
-      Authorization: sessionStorage.getItem("Authorization"),
+      Authorization: sessionStorage.getItem("Admin_Authorization"),
     };
     return config;
   },
@@ -73,12 +73,30 @@ export const loginApi = (param) => {
   });
 };
 
+export const getAPIWithDomain = (subURL,param) => {
+   const header = {
+      'Cache-Control': 'no-cache',
+      Authorization: sessionStorage.getItem("Admin_Authorization"),
+      'Content-Security-Policy': 'self',
+      'X-Content-Type-Options': 'nosniff',
+      'X-XSS-Protection': "1; mode=block"
+    }
+    return axios({
+        method: 'GET',
+        url: `${baseUrl}${subURL}`,
+        withCredentials: true,
+        headers: header
+    })
+}
+
 export const multipartPostCall =  (url,param) => {
-  const authorizationToken = sessionStorage.getItem("Authorization");
+  const authorizationToken = sessionStorage.getItem("Admin_Authorization");
   return axios({
     method: "POST",
     url: `${apiUrl}${url}`,
     //headers: {...header,...{'Content-Type': 'multipart/form-data' }},
+    // headers: {"Admin_Authorization": "Basic Y2RpY2FkbWluQGltb25pdG9ycGx1cy5jb206VGVzdEAxMjM=",'Cache-Control': 'no-cache','Content-Type': 'multipart/form-data', 
+    //   headers: {"Admin_Authorization": "Basic Y2RpY3N1cGVyYWRtaW46RHVyZUAyazI1",'Cache-Control': 'no-cache','Content-Type': 'multipart/form-data', 
 
     //   'Content-Security-Policy': 'self',
     // 'X-Content-Type-Options': 'nosniff',

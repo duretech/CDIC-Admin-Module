@@ -35,7 +35,7 @@ const LoginSmartSetup = ({ onSuccess, setUserDetail }) => {
             .then((res) => {
                 // console.log(res);
                 // sessionStorage.setItem("userData", JSON.stringify(res.data));
-                // sessionStorage.setItem("Authorization", Authorization);
+                // sessionStorage.setItem("Admin_Authorization", Authorization);
                 // setUserDetail({ Authorization: Authorization });
                 setLoading(false);
                 // onSuccess();
@@ -65,7 +65,7 @@ const LoginSmartSetup = ({ onSuccess, setUserDetail }) => {
 
     const handleLogout = () => {
         //console.log(":inside logout");
-        sessionStorage.removeItem("Authorization");
+        sessionStorage.removeItem("Admin_Authorization");
         //window.location.reload();
         // this.props.history.push("/Home");
     };

@@ -9,7 +9,7 @@ import LoginRoutes from "./router/LoginRoutes";
 import indexRoutes from "./router/IndexRoutes";
 import DashboardRoutes from "./router/DashboardRoutes";
 import Protected from "./router/Protected";
-
+import { ToastContainer } from "react-toastify";
 import { withTranslation } from 'react-i18next';
 import './i18n';
 
@@ -17,7 +17,7 @@ const loading = <div className="loading"></div>;
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(
-    sessionStorage.getItem("Authorization") ? true : false
+    sessionStorage.getItem("Admin_Authorization") ? true : false
   );
 
   const updateLoggedInStatus = () => {
@@ -53,20 +53,29 @@ const App = () => {
   });
 
   return (
-    <BrowserRouter basename="/cdicdashboardv2">
-      {loggedIn ? <Header onSuccess={updateLogOutStatus} /> : null}
-      <React.Suspense fallback={loading}>
-        <Routes>
-          {
-            /* {LoginRoutes.map((route, i) => (
-                <RouteWithSubRoutes key={i} {...route} />
-            ))} */
-            //console.log(aIndexRoutes)
-          }
-          {loggedIn ? aIndexRoutes : aLoginRoutes}
-        </Routes>
-      </React.Suspense>
-    </BrowserRouter>
+    <>
+    <ToastContainer
+        position="bottom-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+      />
+      <BrowserRouter basename="/cdicdashboardv2">
+        {loggedIn ? <Header onSuccess={updateLogOutStatus} /> : null}
+        <React.Suspense fallback={loading}>
+          <Routes>
+            {
+              /* {LoginRoutes.map((route, i) => (
+                  <RouteWithSubRoutes key={i} {...route} />
+              ))} */
+              //console.log(aIndexRoutes)
+            }
+            {loggedIn ? aIndexRoutes : aLoginRoutes}
+          </Routes>
+        </React.Suspense>
+      </BrowserRouter>
+    </>
   );
 };
 

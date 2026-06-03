@@ -21,6 +21,8 @@ const VariableDownload = React.lazy(() => import("../pages/VariableDownload/Vari
 
 const AuditTrailManagement = React.lazy(() => import("../pages/AuditTrailManagement/AuditTrailManagement"))
 
+const OrganisationPatientCount = React.lazy(() => import("../pages/OrganisationPatientCount/OrganisationPatientCount"))
+
 const routes = [
   {
     path: "/home",
@@ -89,6 +91,10 @@ const routes = [
   {
     path: "/audittrailmanagement",
     component: AuditTrailManagement,
+  },
+  {
+    path: "/organisation",
+    component: OrganisationPatientCount,
   },
   {
     default: "/",

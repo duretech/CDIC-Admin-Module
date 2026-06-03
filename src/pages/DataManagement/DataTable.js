@@ -258,10 +258,10 @@ const Table = (props) => {
         <button onClick={() => previousPage()} disabled={!canPreviousPage} className={!canPreviousPage ? 'disabled' : ''}>
           {"<"}
         </button>{" "}
-        <button onClick={() => nextPage()} disabled={!canNextPage} className={!canPreviousPage ? 'disabled' : ''}>
+        <button onClick={() => nextPage()} disabled={!canNextPage} className={!canNextPage ? 'disabled' : ''}>
           {">"}
         </button>{" "}
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} className={!canPreviousPage ? 'disabled' : ''}>
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} className={!canNextPage ? 'disabled' : ''}>
           {">>"}
         </button>{" "}
         <span>

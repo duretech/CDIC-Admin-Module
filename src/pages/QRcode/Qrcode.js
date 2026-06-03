@@ -25,7 +25,7 @@ const Qrcode = ({ props }) => {
       url: url,
       method: 'GET',
       responseType: 'blob',
-      headers: { Authorization: sessionStorage.getItem("Authorization") },
+      headers: { Authorization: sessionStorage.getItem("Admin_Authorization") },
     }).then((res) => {
       // console.log(res)
       var FileSaver = require('file-saver');

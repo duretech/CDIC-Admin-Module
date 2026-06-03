@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, DropdownItem } from "reactstrap";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 // import Tooltip from '@material-ui/core/Tooltip';
-import API from "../services";
+import API, {getAPIWithDomain} from "../services";
 import swal from 'sweetalert';
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
@@ -56,6 +56,7 @@ const Header = ({ onSuccess }) => {
     doctorName: "Dr. Smith",
   };
   const isDataManagementActive = ["/datamanagement", "/dataexport", "/upload", "/uploadlogs"].includes(location.pathname);
+  const isOrgManagementActive = ["/facilitymanagement", "/organisationdetails", "/organisation"].includes(location.pathname);
   const isTranslationsActive = ["/translations", "/applabels"].includes(location.pathname);
 
   //Reset Password
@@ -209,6 +210,11 @@ const Header = ({ onSuccess }) => {
 
   const handleLogout = () => {
     // console.log(":inside logout");
+    // getAPIWithDomain('service/dhis-web-commons-security/logout.action').then((result) => {
+    
+    // }).catch((err) => {
+      
+    // });
     sessionStorage.clear()
     sessionStorage.clear()
     onSuccess()
@@ -284,6 +290,19 @@ const Header = ({ onSuccess }) => {
                     <Link to="/audittrailmanagement" className="nav-link">{t("Audit Trail")}</Link>
                   </li>
                 </>
+              )}
+
+              {isOrgManagementActive && app_locale == "ETHIOPIA" && (
+                <div className="sub-navbar">
+                  <ul className="navbar-nav sub-nav">
+                    <li className={`sub-item ${location.pathname === "/facilitymanagement" ? "active" : ""}`}>
+                      <Link to="/facilitymanagement">{t("Manage Organisation Units")}</Link>
+                    </li>
+                    <li className={`sub-item ${location.pathname === "/organisation" ? "active" : ""}`}>
+                      <Link to="/organisation">{t("Patient Count by Organisation")}</Link>
+                    </li>
+                  </ul>
+                </div>
               )}
 
               {isDataManagementActive && (

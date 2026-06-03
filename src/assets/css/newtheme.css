@@ -257,7 +257,7 @@ span.threshold {
     color: var(--color-white) !important;
 }
 
-.filter-sidebar-content .resetfilterbtn,
+/*.filter-sidebar-content .resetfilterbtn,*/
 .table-linelist .btn-secondary-gray,
 .btn-secondary-gray,
 #dataSection button.btn-primary.btn-secondary-gray.nextbtn{
@@ -364,4 +364,21 @@ tr:nth-child(2n) td p{
 
 .regtabbody.card-body .formInput label.text-danger{
     margin-bottom: 2px;
+}
+
+/* Toast container */
+.Toastify__toast {
+  border-bottom: 4px solid #001965 !important; /* Change bottom border color */
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+/* Success icon color */
+.Toastify__toast-icon svg {
+  fill: #001965 !important;
+}
+
+/* Success progress bar color */
+.Toastify__progress-bar--success {
+  background: #001965 !important;
 }

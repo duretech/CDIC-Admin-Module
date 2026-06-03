@@ -169,7 +169,26 @@ const UserManagement = ({ props }) => {
         /^[A-Za-z]+([ '-][A-Za-z]+)*$/,
         "Cannot contain number or special symbols"
       ),
-    username: Yup.string().required("Username is required"),
+    username: Yup.string()
+      .required("Username is required")
+      .test(
+      "username-email-if-superuser",
+      "Username must be a valid email address for Superuser role",
+      function (value) {
+        const { role } = this.parent;
+
+        // Find the selected role from userRoles to check if it's superuser
+        const selectedRole = userRoles.find((r) => r.value === role);
+        const isSuperuser = selectedRole?.label?.toLowerCase() === "superuser";
+
+        if (isSuperuser) {
+          // Validate that username matches email format
+          return Yup.string().email().isValidSync(value);
+        }
+
+        return true; // No restriction for other roles
+      }
+    ),
     email: Yup.string().required("Email is required").email("Invalid email"),
     mobile: Yup.string()
       .min(10, "Minimum length 10")
@@ -221,6 +240,20 @@ const UserManagement = ({ props }) => {
   );
 
   const [isSidebarOpen, setSidebar] = useState(false);
+
+
+const resetOrganisation = () => {
+  setCountryOrg([{ displayName: "Select Country", id: null }]);
+  setLevels([]);
+  setCurrentOrg(null);
+
+  // Optional but SAFE (prevents edge cases)
+  setProvinceList([]);
+  setDistrictList([]);
+  setBlocksList([]);
+  setFacilityList([]);
+  setSubFacilityList([]);
+};
 
   function buildOrgUnitTree(units) {
     const unitMap = new Map();
@@ -711,6 +744,7 @@ const UserManagement = ({ props }) => {
                     initialValues={{
                       firstname: "",
                       lastname: "",
+                      username: "",
                       email: "",
                       mobile: "",
                       password: "",
@@ -823,6 +857,8 @@ const UserManagement = ({ props }) => {
                                       }
                                       // values.email
                                       getUserList();
+                                      resetOrganisation();          // ✅ reset org
+                                      formRef.current.resetForm();  // ✅ reset form
                                       setUserAddVariable(false);
                                     });
                                   } else {
@@ -1013,7 +1049,7 @@ const UserManagement = ({ props }) => {
                                                 return (
                                                   <option
                                                     key={id}
-                                                    value={t(role.value)}
+                                                    value={role.value}
                                                   >
                                                     {" "}
                                                     {t(role.label)}
@@ -1151,8 +1187,8 @@ const UserManagement = ({ props }) => {
                         values.disabled = false
                         values.userCredentials.disabled = false;
                       }
-                      if (userCheck) values.userCredentials.disabled = false;
-                      else values.userCredentials.disabled = true;
+                      // if (userCheck) values.userCredentials.disabled = false;
+                      // else values.userCredentials.disabled = true;
                       // return
                       API.put("users/" + values.id, values)
                         .then((res) => {
@@ -1166,6 +1202,8 @@ const UserManagement = ({ props }) => {
                               button: "Close",
                             }).then(function () {
                               getUserList();
+                              resetOrganisation();          // ✅ reset org
+                              formRef.current.resetForm();  // ✅ reset form
                               setUserEditVariable(false);
                             });
                           } else {
@@ -1346,13 +1384,14 @@ const UserManagement = ({ props }) => {
                                 <Field name="disabled">
                                   {({ field, meta }) => (
                                     <>
+                                    {console.log("field ",field.value,field,userCheck)}
                                       <Form.Label className="label">Status</Form.Label>
                                       <div className="formgroup">
                                         <span className="formInput">
-                                          <select className="form-control" {...field} value={field.value}>
+                                          <select className="form-control" {...field} value={!field.value ? "activate" : "deactivate" }>
                                             <option value="">--Select--</option>
                                             <option value="activate">Active</option>
-                                            <option value="deactivate">Deactivate</option>
+                                            <option value="deactivate">Inactive</option>
                                           </select>
                                         </span>
                                       </div>

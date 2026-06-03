@@ -105,6 +105,12 @@ const Table = (props) => {
         accessor: 'phoneNumber',
       },
       {
+        Header: 'Role',
+        Cell: props => <span>{props?.row?.original?.userRoles?.[0]?.name ? props?.row?.original?.userRoles?.[0]?.name : "-"}</span>
+        ,
+        accessor: 'role',
+      },
+      {
         Header: 'Status',
         Cell: props => <span>{props?.row?.original?.userCredentials.disabled ? "Inactive" : "Active"}</span>
         ,

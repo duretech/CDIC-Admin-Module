@@ -175,8 +175,10 @@ const DataManagement = ({ props }) => {
   }
 
   useEffect(() => {
-    getUserList()
-
+    //localStorage.removeItem('persist:root');
+    //sessionStorage.removeItem("Admin_Authorization");
+    if (orgID)
+      getUserList()
   }, [dummyVariable, refreshTable]);
 
   const getUserList = () => {

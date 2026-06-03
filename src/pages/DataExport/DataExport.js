@@ -18,7 +18,8 @@ import swal from "sweetalert";
 import { Modal } from "react-bootstrap";
 import Loader from "../../components/loaders/loader";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import {app_locale } from "../../config/appConfig";
+import {app_locale, data_export } from "../../config/appConfig";
+import { isArray } from "underscore";
 
 
 function DataExport() {
@@ -51,6 +52,7 @@ function DataExport() {
     const [defaultOrg, setDefaultOrg] = useState(
         JSON.parse(sessionStorage.getItem("userData")).organisationUnits
     );
+    const [selectedOrg, setSelectedOrg] = useState(null)
     const [periodName, setPeriodName] = useState();
     const [periodType, setPeriodType] = useState("Yearly");
     const [isSidebarOpen, setSidebar] = useState(false);
@@ -79,7 +81,7 @@ function DataExport() {
         setSidebar(false);
     };
 
-    const applyFilter = (period, periodname, periodType) => {
+    const applyFilter = (period, periodname, periodType, currentOrg) => {
         setFilterFlag(true);
 
 
@@ -89,6 +91,11 @@ function DataExport() {
 
 
         setCurrentPeriod(period);
+        //console.log("currentOrg ",currentOrg,defaultOrg)
+        setSelectedOrg(currentOrg)
+        if(isArray(currentOrg)){
+            setSelectedOrg(currentOrg[0].id)
+        }
         // console.log(period);
         closeSidebar();
         //}, 800);
@@ -99,9 +106,11 @@ function DataExport() {
     const resetFilter = () => {
         setCurrentPeriod(date.getFullYear().toString());
         setPeriodName("");
+        setPeriodType("Yearly");
         setOrgID(defaultOrg[0].id);
         setBreadcrumbOrg(defaultOrg);
         setFilterFlag(false);
+        setSelectedOrg(null)
         closeSidebar();
         //setCurrentMapKey(currentMapKey + 1);
     };
@@ -160,12 +169,12 @@ function DataExport() {
         });
          return;
         }
-        console.log(periodName, periodType, currentPeriod);
+        //console.log(periodName, periodType, currentPeriod,defaultOrg,breadcrumbOrg);
+        //console.log("selectedOrg ",selectedOrg)
         setLoading(true);
-
         let instace = {
+            orguid: selectedOrg ? selectedOrg : JSON.parse(sessionStorage.getItem("userData")).orguid,
             programuid: JSON.parse(sessionStorage.getItem("userData")).programuid,
-            orguid: JSON.parse(sessionStorage.getItem("userData")).orguid,
             fromdate: currentPeriod ? currentPeriod.split(';')[0] : "202408;202409;202410;",
             todate: periodType == "Date Range" ? currentPeriod.split(';')[1] : "",
             filtertype: periodType ? periodType : "Monthly",
@@ -174,14 +183,30 @@ function DataExport() {
             useruid: userData.id
         }
 
-
-        API.post("dashboardIndicator/dataexport", instace).then((res) => {
+        //let apiURL = "dashboardIndicator/dataexportnew"
+        let apiURL = "dashboardIndicator/dataexport"
+        
+        if(app_locale == "PRODUCT" || data_export === true)
+        {
+            apiURL = "dashboardIndicator/dataexportnew"
+        }
+        API.post(apiURL, instace).then((res) => {
             setLoading(false);
-            var link = document.createElement("a");
-            // link.target = "_blank";
-            // link.download = "Download_Template_" + new Date() + ".xlsx";
-            link.href = res.data.success;
-            link.click();
+            const queryStatus = res?.data?.queryStatus;
+            if((app_locale == "ETHIOPIA" && queryStatus && typeof queryStatus === "string" && queryStatus.toLowerCase().includes("success")) || (app_locale != "ETHIOPIA")){
+                var link = document.createElement("a");
+                // link.target = "_blank";
+                // link.download = "Download_Template_" + new Date() + ".xlsx";
+                link.href = res.data.success;
+                link.click();
+            }else{
+                swal({
+                    title: "",
+                    text: res?.data?.queryStatus ? res?.data?.queryStatus : "No data!",
+                    icon: "warning",
+                    button: "Close",
+                });
+            }
         });
     };
 
@@ -550,6 +575,7 @@ const handleCloseSetPasswordModal = () => {
                 <div className="headerfixedcontainer subnavheaderfixedcontainer">
                     <Container fluid>
                         <div className="headerbarcontainer">
+                            {app_locale == "ETHIOPIA" &&
                             <div className="mr-2">
                                 <Button
                                     variant="primary"
@@ -559,6 +585,7 @@ const handleCloseSetPasswordModal = () => {
                                     {t("Select Filter")} <i className="fa fa-caret-down"></i>
                                 </Button>
                             </div>
+                            }
                             {/* <div className="daterangeholder mr-2">
                           <p className="mb-0 daterangeholder">
                           <i className="fa fa-chart-bar color-white fs-12px"></i>
@@ -571,6 +598,7 @@ const handleCloseSetPasswordModal = () => {
                                         {/* <FontAwesomeIcon className="color-white" icon={faHome} />{" "} */}
                                         {t("Data Export")}
                                     </Breadcrumb.Item>
+                                    {console.log("breadcrumbOrg ",breadcrumbOrg)}
                                     {breadcrumbOrg
                                         ? breadcrumbOrg.map((org) => (
                                             <Breadcrumb.Item href="#" key={org.id}>
