@@ -193,7 +193,7 @@ function DataExport() {
         API.post(apiURL, instace).then((res) => {
             setLoading(false);
             const queryStatus = res?.data?.queryStatus;
-            if((app_locale == "ETHIOPIA" && queryStatus && typeof queryStatus === "string" && queryStatus.toLowerCase().includes("success")) || (app_locale != "ETHIOPIA")){
+            if((data_export === true && queryStatus && typeof queryStatus === "string" && queryStatus.toLowerCase().includes("success")) || (!data_export)){
                 var link = document.createElement("a");
                 // link.target = "_blank";
                 // link.download = "Download_Template_" + new Date() + ".xlsx";
