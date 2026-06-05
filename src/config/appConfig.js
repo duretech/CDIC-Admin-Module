@@ -26,7 +26,7 @@ export const appApiUrl = "https://YOUR_SERVER_URL/service/api/";
 export const app_locale = "";// Mention your locale e.g. "ETHIOPIA" or else it should be blank "";
 export const adminAccountEmail = "YOUR_ADMIN_ACCOUNT_EMAIL";
 export const adminAccountPassword = "YOUR_ADMIN_ACCOUNT_PASSWORD";
-export const data_export = false
+export const data_export = true
 
 
 
