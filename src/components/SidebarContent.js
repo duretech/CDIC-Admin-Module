@@ -20,7 +20,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import API from "../services";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { app_locale } from "../config/appConfig";
+import { app_locale, data_export_filter } from "../config/appConfig";
 import swal from "sweetalert";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -77,7 +77,7 @@ export default function SidebarContent(props) {
   const [blocksList, setBlocksList] = useState([]);
   const [facilityList, setFacilityList] = useState([]);
   const [periodType, setPeriodType] = useState(
-    app_locale == "ETHIOPIA" ? "Date Range" : "Yearly"
+    app_locale == "ETHIOPIA" || data_export_filter == true ? "Date Range" : "Yearly"
   );
   const [subfacilityList, setSubFacilityList] = useState([]);
 
@@ -196,7 +196,7 @@ export default function SidebarContent(props) {
 
     // Reset period
     setPeriodName("");
-    setPeriodType(app_locale == "ETHIOPIA" ? "Date Range" :"Yearly");
+    setPeriodType(app_locale == "ETHIOPIA" || data_export_filter == true ? "Date Range" :"Yearly");
     setCurrentPeriod(date.getFullYear().toString());
     
     // FIX: Reset date range to null (empty)
@@ -462,7 +462,7 @@ export default function SidebarContent(props) {
 
   return (
     <div className="filter-sidebar-content">
-      {app_locale == "ETHIOPIA" &&
+      {(app_locale == "ETHIOPIA" || data_export_filter == true) &&
         <p className="sidebar-header mb-3">
           {t("Select Filter")}
           <button
@@ -482,7 +482,7 @@ export default function SidebarContent(props) {
       {pathname != "/alerts" ? (
         <div>
           <div className="mb-2 mt-4"></div>
-          {app_locale != "ETHIOPIA" && <div className="periodselectcontainer">
+          {(app_locale != "ETHIOPIA" && !data_export_filter) && <div className="periodselectcontainer">
             <Form>
               <Form.Group controlId="exampleForm.SelectCustom mt-2">
                 <Form.Label className="sidebar-header whiteColor">
@@ -500,7 +500,7 @@ export default function SidebarContent(props) {
                     setToDate(null);
                     setPeriodName("");
                   }}
-                  disabled={app_locale == "ETHIOPIA" ? true : false}
+                  disabled={(app_locale == "ETHIOPIA" || data_export_filter == true) ? true : false}
                 >
                   <option value="Date Range">Date Range</option>
                   <option value="Monthly">Monthly</option>

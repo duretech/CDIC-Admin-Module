@@ -21,12 +21,13 @@ export const apppartnerdureLogo = durepartnerLogo;
 // Application API URLs
 
 // live
-export const appBaseUrl = "https://YOUR_SERVER_URL/";
-export const appApiUrl = "https://YOUR_SERVER_URL/service/api/";
+export const appBaseUrl = "http://localhost:8080/";
+export const appApiUrl = "http://localhost:8080/service/api/";
 export const app_locale = "";// Mention your locale e.g. "ETHIOPIA" or else it should be blank "";
 export const adminAccountEmail = "YOUR_ADMIN_ACCOUNT_EMAIL";
 export const adminAccountPassword = "YOUR_ADMIN_ACCOUNT_PASSWORD";
-export const data_export = true
+export const data_export = true;
+export const data_export_filter = true;
 
 
 

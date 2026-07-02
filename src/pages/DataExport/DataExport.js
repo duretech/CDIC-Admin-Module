@@ -18,7 +18,7 @@ import swal from "sweetalert";
 import { Modal } from "react-bootstrap";
 import Loader from "../../components/loaders/loader";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import {app_locale, data_export } from "../../config/appConfig";
+import {app_locale, data_export, data_export_filter } from "../../config/appConfig";
 import { isArray } from "underscore";
 
 
@@ -575,7 +575,7 @@ const handleCloseSetPasswordModal = () => {
                 <div className="headerfixedcontainer subnavheaderfixedcontainer">
                     <Container fluid>
                         <div className="headerbarcontainer">
-                            {app_locale == "ETHIOPIA" &&
+                            {(app_locale == "ETHIOPIA" || data_export_filter == true) &&
                             <div className="mr-2">
                                 <Button
                                     variant="primary"
