@@ -126,6 +126,10 @@ const Table = (props) => {
             Header: "Upload Date",
             accessor: "uploaddate",
           },
+          {
+            Header: "Status",
+            accessor: "status",
+          },
           // {
           //   Header: 'URL',
           //   accessor: 'fileurl',
@@ -147,17 +151,37 @@ const Table = (props) => {
           //   Header: 'Date Of Reg.',
           //   accessor: 'dateofreg',
           // },
+          // {
+          //   Header: "Response File",
+          //   Cell: (props) => (
+          //     <a href={props.cell.value} target="_blank">
+          //       <button className="btn btn-primary">
+          //         <FontAwesomeIcon className="mr-0" icon={faFileExcel} />
+          //       </button>
+          //     </a>
+          //   ),
+          //   accessor: "fileurl",
+          // },
           {
             Header: "Response File",
-            Cell: (props) => (
-              <a href={props.cell.value} target="_blank">
-                <button className="btn btn-primary">
-                  <FontAwesomeIcon className="mr-0" icon={faFileExcel} />
-                </button>
-              </a>
-            ),
             accessor: "fileurl",
-          },
+            Cell: ({ row, value }) => {
+              const status = row.original.status;
+
+              // Hide/disable when processing
+              if (status === "Processing..." || status === "Processing..") {
+                return null; // if you want the cell to be completely blank
+              }
+
+              return (
+                <a href={value} target="_self" rel="noopener noreferrer">
+                  <button className="btn btn-primary">
+                    <FontAwesomeIcon className="mr-0" icon={faFileExcel} />
+                  </button>
+                </a>
+              );
+            },
+          }
         ],
     []
   );

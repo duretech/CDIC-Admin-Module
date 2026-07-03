@@ -16,6 +16,7 @@ import { Breadcrumb, Button, Container, InputGroup } from "react-bootstrap";
 import { appBaseUrl } from "../../config/appConfig";
 import swal from "sweetalert";
 import Loader from "../../components/loaders/loader";
+import { useNavigate } from "react-router-dom";
 const colors = [
   "#1d6996",
   "#ff8080",
@@ -39,8 +40,8 @@ const colors = [
 
 const Upload = ({ props }) => {
   const fileInputRef = useRef(null)
-    const { t, i18n } = useTranslation();
-
+  const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   const [count, setCount] = useState();
   const [loading, setLoading] = useState(false);
   const [orgID, setOrgID] = useState();
@@ -179,7 +180,9 @@ const Upload = ({ props }) => {
       text:"File sent for processing, Please check data upload logs",
       icon: "success",
       button: "Close",
-    })
+    }).then(() => {
+      navigate("/uploadlogs");
+    });
 
   };
   useEffect(() => {
