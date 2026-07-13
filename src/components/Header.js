@@ -291,8 +291,8 @@ const Header = ({ onSuccess }) => {
                   </li>
                 </>
               )}
-
-              {isOrgManagementActive && app_locale == "ETHIOPIA" && (
+              
+              {isOrgManagementActive && (
                 <div className="sub-navbar">
                   <ul className="navbar-nav sub-nav">
                     <li className={`sub-item ${location.pathname === "/facilitymanagement" ? "active" : ""}`}>
