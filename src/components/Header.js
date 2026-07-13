@@ -283,7 +283,7 @@ const Header = ({ onSuccess }) => {
                   <li className={`nav-item ${location.pathname === "/usermanagement" ? "active" : ""}`}>
                     <Link to="/usermanagement" className="nav-link">{t("User Management")}</Link>
                   </li>
-                  <li className={`nav-item ${location.pathname === "/facilitymanagement" ? "active" : ""}`}>
+                  <li className={`nav-item ${location.pathname === "/facilitymanagement" || location.pathname === "/organisation" ? "active" : ""}`}>
                     <Link to="/facilitymanagement" className="nav-link">{t("Organization Management")}</Link>
                   </li>
                   <li className={`nav-item ${location.pathname === "/audittrailmanagement" ? "active" : ""}`}>
