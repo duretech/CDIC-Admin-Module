@@ -1388,7 +1388,16 @@ const resetOrganisation = () => {
                                       <Form.Label className="label">Status</Form.Label>
                                       <div className="formgroup">
                                         <span className="formInput">
-                                          <select className="form-control" {...field} value={!field.value ? "activate" : "deactivate" }>
+                                          {/* <select className="form-control" {...field} value={!field.value ? "activate" : "deactivate" }> */}
+                                          <select
+                                              className="form-control"
+                                              {...field}
+                                              value={
+                                                field.value === true || field.value === "deactivate"
+                                                  ? "deactivate"
+                                                  : "activate"
+                                              }
+                                            >
                                             <option value="">--Select--</option>
                                             <option value="activate">Active</option>
                                             <option value="deactivate">Inactive</option>
