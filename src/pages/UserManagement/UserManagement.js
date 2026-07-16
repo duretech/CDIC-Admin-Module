@@ -116,7 +116,10 @@ const UserManagement = ({ props }) => {
   ]);
 
   const handleSelect = (levelIndex, orgID, orgName) => {
-
+    formRef.current.setFieldValue("organisation", orgID, true);
+    formRef.current.setFieldTouched("organisation", true, false);
+    formRef.current.validateField("organisation");
+    
     if (levelIndex === 0) {
       // If Country is selected, reset everything and fetch the next level
       setCountryOrg([{ displayName: orgName, id: orgID }]);
@@ -209,6 +212,7 @@ const UserManagement = ({ props }) => {
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()])[a-zA-Z\d!@#$%^&*()]{8,}$/,
         "Password must contain at least 1 lowercase, 1 uppercase, 1 number, and 1 symbol character"
       ),
+      organisation: Yup.string().required("Organisation is required"),
   });
 
   const userEditSchema = Yup.object().shape({
@@ -217,6 +221,7 @@ const UserManagement = ({ props }) => {
     email: Yup.string().email("Invalid email"),
     phoneNumber: Yup.string().min(10, "Minimum length 10"),
     status: Yup.boolean(),
+    disabled: Yup.string().required("Status is required"),
 
     // password: Yup.string().min(6, 'Minimum length 6 character').required('Password is required')
   });
@@ -749,6 +754,7 @@ const resetOrganisation = () => {
                       mobile: "",
                       password: "",
                       role: "",
+                      organisation: "",
                     }}
                     validationSchema={userObjectSchema}
                     onSubmit={(values) => {
@@ -1162,6 +1168,9 @@ const resetOrganisation = () => {
                                 ))}
 
                               </div>
+                             {touched.organisation && errors.organisation && (
+    <TextError>{errors.organisation}</TextError>
+)}
                             </Form.Group>
                             <Button className="btn addbtn mt-3" type="submit">
                               {t("Add")}
@@ -1179,7 +1188,16 @@ const resetOrganisation = () => {
                     initialValues={userEditObject || {}}
                     validationSchema={userEditSchema}
                     onSubmit={(values) => {
-                      console.log(values, "values")
+                      //console.log(values, "values")
+                      if(values.disabled === ""){
+                        swal({
+                              title: "Please select the Status",
+                              //content: "Please select the Status",
+                              icon: "warning",
+                              button: "Close",
+                            })
+                        return;
+                      }
                       if (values.disabled === "deactivate") {
                         values.disabled = true
                         values.userCredentials.disabled = true;
@@ -1356,7 +1374,7 @@ const resetOrganisation = () => {
                                   return (
                                     <>
                                       <Form.Label className="label">
-                                        {t("Password")} *
+                                        {t("Password")} 
                                       </Form.Label>
                                       <div className="formgroup">
                                         <span className="formInput">
@@ -1385,19 +1403,19 @@ const resetOrganisation = () => {
                                   {({ field, meta }) => (
                                     <>
                                     {console.log("field ",field.value,field,userCheck)}
-                                      <Form.Label className="label">Status</Form.Label>
+                                      <Form.Label className="label">Status *</Form.Label>
                                       <div className="formgroup">
                                         <span className="formInput">
                                           {/* <select className="form-control" {...field} value={!field.value ? "activate" : "deactivate" }> */}
                                           <select
-                                              className="form-control"
-                                              {...field}
-                                              value={
-                                                field.value === true || field.value === "deactivate"
-                                                  ? "deactivate"
-                                                  : "activate"
-                                              }
-                                            >
+                                            className="form-control"
+                                            {...field}
+                                            value={
+                                              field.value === true || field.value === "deactivate"
+                                                ? "deactivate"
+                                                : field.value === false || field.value === "activate" ? "activate" : ""
+                                            }
+                                          >
                                             <option value="">--Select--</option>
                                             <option value="activate">Active</option>
                                             <option value="deactivate">Inactive</option>
